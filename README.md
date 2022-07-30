@@ -111,9 +111,9 @@ If you want to pipe with other tools use this command:
 
 Bugcrowd’s Vulnerability Rating Taxonomy
  
-![P3](2022-07-30_16-29.png)
+![P3](images/2022-07-30_16-29.png)
 
-![P4](2022-07-30_16-29_1.png)
+![P4](images/2022-07-30_16-29_1.png)
 
 **Example Hackerone Report** : https://hackerone.com/reports/906907 200$
 **Example BugCrowd Report**  : https://medium.com/@souravnewatia/exif-geolocation-data-not-stripped-from-uploaded-images-794d20d2fa7d 500$
