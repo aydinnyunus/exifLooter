@@ -66,8 +66,11 @@ General information about setting up Exif Looter locally
 ## Installation
 
 ```bash
-go get github.com/aydinnyunus/exifLooter
+go install github.com/aydinnyunus/exifLooter@latest
 ```
+
+Exif Looter depends on [exiftool](https://exiftool.org/), so make sure it is on
+your PATH.
 
 <!-- USAGE EXAMPLES -->
 
