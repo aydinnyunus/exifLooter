@@ -45,6 +45,7 @@
             <li><a href="#analyze-image">Analyze specific image</a></li>
             <li><a href="#analyze-directory">Analyze specific directory</a></li>
            <li><a href="#pipe">Pipe with other tools</a></li>
+           <li><a href="#remove-metadata">Remove metadata from Images</a></li>
          </ul>
    </li>
     <li><a href="#reports">Reports</a></li>
@@ -105,6 +106,15 @@ If you want to pipe with other tools use this command:
    $ cat urls | exifLooter -p
    $ cat urls | exifLooter --pipe
    $ cat subdomains | waybackurls | grep "jpeg\|png\|jiff\|jpg" >> urls; cat urls | exifLooter --pipe
+```
+
+### Remove Metadata
+
+Remove Metadata from Images
+
+```shell
+   $ exifLooter --remove --image image.jpeg
+   $ exifLooter --remove --directory images/
 ```
 
 
