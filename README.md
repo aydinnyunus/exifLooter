@@ -47,6 +47,7 @@
            <li><a href="#pipe">Pipe with other tools</a></li>
          </ul>
    </li>
+    <li><a href="#reports">Reports</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -65,8 +66,11 @@ General information about setting up Exif Looter locally
 ## Installation
 
 ```bash
-go get github.com/aydinnyunus/exifLooter
+go install github.com/aydinnyunus/exifLooter@latest
 ```
+
+Exif Looter depends on [exiftool](https://exiftool.org/), so make sure it is on
+your PATH.
 
 <!-- USAGE EXAMPLES -->
 
@@ -102,6 +106,23 @@ If you want to pipe with other tools use this command:
    $ cat urls | exifLooter --pipe
    $ cat subdomains | waybackurls | grep "jpeg\|png\|jiff\|jpg" >> urls; cat urls | exifLooter --pipe
 ```
+
+
+<!-- REPORTS -->
+
+## Reports
+
+Bugcrowd’s Vulnerability Rating Taxonomy
+ 
+![P3](images/2022-07-30_16-29.png)
+
+![P4](images/2022-07-30_16-29_1.png)
+
+**Example Hackerone Report** : https://hackerone.com/reports/906907 200$
+
+**Example BugCrowd Report**  : https://medium.com/@souravnewatia/exif-geolocation-data-not-stripped-from-uploaded-images-794d20d2fa7d 500$
+
+
 
 
 <!-- ROADMAP -->

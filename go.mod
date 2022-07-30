@@ -1,4 +1,4 @@
-module exifLooter
+module github.com/aydinnyunus/exifLooter
 
 go 1.17
 
