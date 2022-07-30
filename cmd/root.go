@@ -23,8 +23,8 @@ var image string
 var rootCmd = &cobra.Command{
 	Use:   "exifLooter",
 	Short: "ExifLooter finds GeoLocation Metadata and display",
-	Long: `ExifLooter finds GeoLocation Metadata and display. You can use with pipe and flags`,
-	Run: analyzeFlags,
+	Long:  `ExifLooter finds GeoLocation Metadata and display. You can use with pipe and flags`,
+	Run:   analyzeFlags,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -39,6 +39,8 @@ func Execute() {
 func init() {
 
 	rootCmd.PersistentFlags().BoolP("pipe", "p", false, "Pipe with other scripts")
+
+	rootCmd.PersistentFlags().BoolP("remove", "r", false, "Remove metadata from Image")
 
 	rootCmd.PersistentFlags().StringP("image", "i", "", "Specify a image for Analyzing")
 
@@ -65,8 +67,19 @@ func analyzeFlags(cmd *cobra.Command, _ []string) {
 		log.Fatal(err)
 	}
 
+	rmv, err := cmd.Flags().GetBool("remove")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	if len(directory) != 0 {
 		analyzeDirectory(cmd)
+	} else if rmv {
+		if len(directory) != 0{
+			removeMetadataDirectory(cmd)
+		} else{
+			removeMetadata(cmd, image, false)
+		}
 	} else if len(image) != 0 {
 		analyzeImages(cmd, image, false)
 	} else if p {
@@ -117,6 +130,48 @@ func analyzeDirectory(cmd *cobra.Command) {
 	}
 }
 
+func removeMetadata(cmd *cobra.Command, args string, inDir bool) {
+	if !inDir {
+		img, err := cmd.Flags().GetString("image")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		out, err := exec.Command("exiftool", "-all=", img).Output()
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// fmt.Println(string(out))
+		parseOutput(string(out))
+	} else {
+		out, err := exec.Command("exiftool", "-all=", directory+args).Output()
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// fmt.Println(string(out))
+		parseOutput(string(out))
+	}
+}
+
+func removeMetadataDirectory(cmd *cobra.Command){
+	files, err := ioutil.ReadDir(directory)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, file := range files {
+		if file.IsDir() {
+			continue
+		} else {
+			removeMetadata(cmd, file.Name(), true)
+		}
+	}
+}
+
 func parseOutput(out string) {
 	scanner := bufio.NewScanner(strings.NewReader(out))
 	var flag bool
@@ -131,9 +186,9 @@ func parseOutput(out string) {
 		}
 	}
 
-	if !flag{
-			color.Green("These image/images not Vulnerable")
-	} else{
+	if !flag {
+		color.Green("These image/images not Vulnerable")
+	} else {
 		color.Red("EXIF Geolocation Data Not Stripped From Uploaded Images")
 	}
 }
@@ -151,7 +206,7 @@ func parseOutputPipe(out string, fname string) {
 			vuln = true
 		}
 	}
-	if !vuln{
+	if !vuln {
 		color.Green(fname + " is not Vulnerable")
 	}
 }
