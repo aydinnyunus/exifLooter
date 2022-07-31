@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -39,6 +40,8 @@ func Execute() {
 func init() {
 
 	rootCmd.PersistentFlags().BoolP("pipe", "p", false, "Pipe with other scripts")
+
+	rootCmd.PersistentFlags().BoolP("open-street-map", "m", false, "Get Open Street Map Link")
 
 	rootCmd.PersistentFlags().BoolP("remove", "r", false, "Remove metadata from Image")
 
@@ -72,16 +75,29 @@ func analyzeFlags(cmd *cobra.Command, _ []string) {
 		log.Fatal(err)
 	}
 
+	osm, err := cmd.Flags().GetBool("open-street-map")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	if len(directory) != 0 {
 		analyzeDirectory(cmd)
-	} else if rmv {
-		if len(directory) != 0{
+		if rmv {
 			removeMetadataDirectory(cmd)
-		} else{
-			removeMetadata(cmd, image, false)
+		}
+
+		if osm{
+			GPStoOpenStreetMapDirectory(cmd)
 		}
 	} else if len(image) != 0 {
 		analyzeImages(cmd, image, false)
+		if osm {
+			GPStoOpenStreetMap(cmd, image, false)
+		}
+
+		if rmv {
+			removeMetadata(cmd, image, false)
+		}
 	} else if p {
 		pipeImages()
 	}
@@ -157,7 +173,7 @@ func removeMetadata(cmd *cobra.Command, args string, inDir bool) {
 	}
 }
 
-func removeMetadataDirectory(cmd *cobra.Command){
+func removeMetadataDirectory(cmd *cobra.Command) {
 	files, err := ioutil.ReadDir(directory)
 	if err != nil {
 		log.Fatal(err)
@@ -168,6 +184,66 @@ func removeMetadataDirectory(cmd *cobra.Command){
 			continue
 		} else {
 			removeMetadata(cmd, file.Name(), true)
+		}
+	}
+}
+
+func GPStoOpenStreetMap(cmd *cobra.Command, args string, inDir bool) {
+	if !inDir {
+		img, err := cmd.Flags().GetString("image")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		out, err := exec.Command("exiftool", "-c", "'%.6f'", "-GPSPosition", img).Output()
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		key := strings.Split(string(out), ":")
+		geo := strings.Split(key[1], ",")
+		re := regexp.MustCompile(`'[^']+'`)
+		lat := ""
+		lon := ""
+		for _, val := range geo{
+			newStrs := re.FindAllString(val, -1)
+			for _, s := range newStrs {
+				if strings.Contains(val,"N"){
+					s = strings.Trim(s, "'")
+					lat = s
+				} else if strings.Contains(val,"E"){
+					s = strings.Trim(s, "'")
+					lon = s
+				}
+			}
+		}
+
+		color.Yellow("https://www.openstreetmap.org/?mlat=" + lat + "&mlon=" + lon + "&zoom=12")
+
+	} else {
+		out, err := exec.Command("exiftool", "-c", "'%.6f'", "-GPSPosition", directory+args).Output()
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// fmt.Println(string(out))
+		parseOutput(string(out))
+	}
+}
+
+func GPStoOpenStreetMapDirectory(cmd *cobra.Command) {
+	files, err := ioutil.ReadDir(directory)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, file := range files {
+		if file.IsDir() {
+			continue
+		} else {
+			GPStoOpenStreetMap(cmd, file.Name(), true)
 		}
 	}
 }
