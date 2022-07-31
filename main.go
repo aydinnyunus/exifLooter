@@ -4,7 +4,7 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 */
 package main
 
-import "exifLooter/cmd"
+import "github.com/aydinnyunus/exifLooteexifLooter/cmd"
 
 func main() {
 	cmd.Execute()
