@@ -219,7 +219,7 @@ func GPStoOpenStreetMap(cmd *cobra.Command, args string, inDir bool) {
 			}
 		}
 
-		color.Yellow("https://www.openstreetmap.org/?mlat=" + lat + "&mlon=" + lon + "&zoom=12")
+		color.Red("https://www.openstreetmap.org/?mlat=" + lat + "&mlon=" + lon + "&zoom=12")
 
 	} else {
 		out, err := exec.Command("exiftool", "-c", "'%.6f'", "-GPSPosition", directory+args).Output()
