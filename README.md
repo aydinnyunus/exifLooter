@@ -46,6 +46,7 @@
             <li><a href="#analyze-directory">Analyze specific directory</a></li>
            <li><a href="#pipe">Pipe with other tools</a></li>
            <li><a href="#remove-metadata">Remove metadata from Images</a></li>
+           <li><a href="#open-street-map">Get Open Street Map URL</a></li>
          </ul>
    </li>
     <li><a href="#reports">Reports</a></li>
@@ -116,6 +117,20 @@ Remove Metadata from Images
    $ exifLooter --remove --image image.jpeg
    $ exifLooter --remove --directory images/
 ```
+
+### Open Street Map
+
+Get Open Street Map URL from GPS Location
+
+![Image](images/2022-07-31_16-17.png)
+
+
+```shell
+   $ exifLooter --open-street-map --image image.jpeg
+   $ exifLooter --open-street-map --directory images/
+```
+
+![Image](images/2022-07-31_16-12.png)
 
 
 <!-- REPORTS -->
