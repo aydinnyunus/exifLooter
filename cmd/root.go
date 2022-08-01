@@ -81,7 +81,7 @@ func analyzeFlags(cmd *cobra.Command, _ []string) {
 	}
 
 	if len(directory) != 0 {
-		analyzeDirectory(cmd)
+		AnalyzeDirectory(cmd)
 		if rmv {
 			removeMetadataDirectory(cmd)
 		}
@@ -90,7 +90,7 @@ func analyzeFlags(cmd *cobra.Command, _ []string) {
 			GPStoOpenStreetMapDirectory(cmd)
 		}
 	} else if len(image) != 0 {
-		analyzeImages(cmd, image, false)
+		AnalyzeImages(cmd, image, false)
 		if osm {
 			GPStoOpenStreetMap(cmd, image, false)
 		}
@@ -103,17 +103,19 @@ func analyzeFlags(cmd *cobra.Command, _ []string) {
 	}
 }
 
-func analyzeImages(cmd *cobra.Command, args string, inDir bool) {
+func AnalyzeImages(cmd *cobra.Command, args string, inDir bool) bool{
 	if !inDir {
 		img, err := cmd.Flags().GetString("image")
 		if err != nil {
 			log.Fatal(err)
+			return false
 		}
 
 		out, err := exec.Command("exiftool", img).Output()
 
 		if err != nil {
 			log.Fatal(err)
+			return false
 		}
 
 		// fmt.Println(string(out))
@@ -123,27 +125,32 @@ func analyzeImages(cmd *cobra.Command, args string, inDir bool) {
 
 		if err != nil {
 			log.Fatal(err)
+			return false
 		}
 
 		// fmt.Println(string(out))
 		parseOutput(string(out))
 	}
 
+	return true
+
 }
 
-func analyzeDirectory(cmd *cobra.Command) {
+func AnalyzeDirectory(cmd *cobra.Command) bool{
 	files, err := ioutil.ReadDir(directory)
 	if err != nil {
 		log.Fatal(err)
+		return false
 	}
 
 	for _, file := range files {
 		if file.IsDir() {
 			continue
 		} else {
-			analyzeImages(cmd, file.Name(), true)
+			AnalyzeImages(cmd, file.Name(), true)
 		}
 	}
+	return true
 }
 
 func removeMetadata(cmd *cobra.Command, args string, inDir bool) {
