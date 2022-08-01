@@ -119,7 +119,7 @@ func AnalyzeImages(cmd *cobra.Command, args string, inDir bool) bool{
 		}
 
 		// fmt.Println(string(out))
-		parseOutput(string(out))
+		return parseOutput(string(out))
 	} else {
 		out, err := exec.Command("exiftool", directory+args).Output()
 
@@ -129,10 +129,10 @@ func AnalyzeImages(cmd *cobra.Command, args string, inDir bool) bool{
 		}
 
 		// fmt.Println(string(out))
-		parseOutput(string(out))
+		return parseOutput(string(out))
 	}
 
-	return true
+	return false
 
 }
 
@@ -235,8 +235,28 @@ func GPStoOpenStreetMap(cmd *cobra.Command, args string, inDir bool) {
 			log.Fatal(err)
 		}
 
+		key := strings.Split(string(out), ":")
+		geo := strings.Split(key[1], ",")
+		re := regexp.MustCompile(`'[^']+'`)
+		lat := ""
+		lon := ""
+		for _, val := range geo{
+			newStrs := re.FindAllString(val, -1)
+			for _, s := range newStrs {
+				if strings.Contains(val,"N"){
+					s = strings.Trim(s, "'")
+					lat = s
+				} else if strings.Contains(val,"E"){
+					s = strings.Trim(s, "'")
+					lon = s
+				}
+			}
+		}
+
+		color.Red("https://www.openstreetmap.org/?mlat=" + lat + "&mlon=" + lon + "&zoom=12")
+
 		// fmt.Println(string(out))
-		parseOutput(string(out))
+		// parseOutput(string(out))
 	}
 }
 
@@ -255,7 +275,7 @@ func GPStoOpenStreetMapDirectory(cmd *cobra.Command) {
 	}
 }
 
-func parseOutput(out string) {
+func parseOutput(out string) bool{
 	scanner := bufio.NewScanner(strings.NewReader(out))
 	var flag bool
 	for scanner.Scan() {
@@ -272,8 +292,12 @@ func parseOutput(out string) {
 	if !flag {
 		color.Green("These image/images not Vulnerable")
 	} else {
+
 		color.Red("EXIF Geolocation Data Not Stripped From Uploaded Images")
+		return true
 	}
+
+	return false
 }
 
 func parseOutputPipe(out string, fname string) {
