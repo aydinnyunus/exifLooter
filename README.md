@@ -143,12 +143,9 @@ Bugcrowd’s Vulnerability Rating Taxonomy
 
 ![P4](images/2022-07-30_16-29_1.png)
 
-**Example Hackerone Report** : https://hackerone.com/reports/906907 200$
+**Example Hackerone Report** : https://hackerone.com/reports/906907 $200
 
-**Example BugCrowd Report**  : https://medium.com/@souravnewatia/exif-geolocation-data-not-stripped-from-uploaded-images-794d20d2fa7d 500$
-
-
-
+**Example BugCrowd Report** : https://medium.com/@souravnewatia/exif-geolocation-data-not-stripped-from-uploaded-images-794d20d2fa7d $500
 
 <!-- ROADMAP -->
 
@@ -162,7 +159,7 @@ See the [open issues](https://github.com/aydinnyunus/exifLooter/issues) for a li
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to be learned, inspire, and create. Any
+Contributions are what makes the open source community such an amazing place to learn, inspire, and create. Any
 contributions you make are **greatly appreciated**.
 
 1. Fork the Project
@@ -183,10 +180,7 @@ Distributed under the Apache License 2.0 License. See `LICENSE` for more informa
 
 ## Contact
 
-[<img target="_blank" src="https://img.icons8.com/bubbles/100/000000/linkedin.png" title="LinkedIn">](https://linkedin.com/in/yunus-ayd%C4%B1n-b9b01a18a/)       [<img target="_blank" src="https://img.icons8.com/bubbles/100/000000/github.png" title="Github">](https://github.com/aydinnyunus/WhatsappBOT)     [<img target="_blank" src="https://img.icons8.com/bubbles/100/000000/instagram-new.png" title="Instagram">](https://instagram.com/aydinyunus_/) [<img target="_blank" src="https://img.icons8.com/bubbles/100/000000/twitter.png" title="LinkedIn">](https://twitter.com/aydinnyunuss)
-
-
-
+[<img target="_blank" src="https://img.icons8.com/bubbles/100/000000/linkedin.png" title="LinkedIn">](https://linkedin.com/in/yunus-ayd%C4%B1n-b9b01a18a/) [<img target="_blank" src="https://img.icons8.com/bubbles/100/000000/github.png" title="Github">](https://github.com/aydinnyunus/WhatsappBOT) [<img target="_blank" src="https://img.icons8.com/bubbles/100/000000/instagram-new.png" title="Instagram">](https://instagram.com/aydinyunus_/) [<img target="_blank" src="https://img.icons8.com/bubbles/100/000000/twitter-squared.png" title="LinkedIn">](https://twitter.com/aydinnyunuss)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
