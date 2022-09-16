@@ -104,7 +104,8 @@ func analyzeFlags(cmd *cobra.Command, _ []string) {
 }
 
 func AnalyzeImages(cmd *cobra.Command, args string, inDir bool) bool{
-	if !inDir {
+
+		if !inDir{
 		img, err := cmd.Flags().GetString("image")
 		if err != nil {
 			log.Fatal(err)
@@ -195,7 +196,7 @@ func removeMetadataDirectory(cmd *cobra.Command) {
 	}
 }
 
-func GPStoOpenStreetMap(cmd *cobra.Command, args string, inDir bool) {
+func GPStoOpenStreetMap(cmd *cobra.Command, args string, inDir bool)  (string,string){
 	if !inDir {
 		img, err := cmd.Flags().GetString("image")
 		if err != nil {
@@ -227,6 +228,7 @@ func GPStoOpenStreetMap(cmd *cobra.Command, args string, inDir bool) {
 		}
 
 		color.Red("https://www.openstreetmap.org/?mlat=" + lat + "&mlon=" + lon + "&zoom=12")
+		return lat, lon
 
 	} else {
 		out, err := exec.Command("exiftool", "-c", "'%.6f'", "-GPSPosition", directory+args).Output()
@@ -254,10 +256,12 @@ func GPStoOpenStreetMap(cmd *cobra.Command, args string, inDir bool) {
 		}
 
 		color.Red("https://www.openstreetmap.org/?mlat=" + lat + "&mlon=" + lon + "&zoom=12")
-
+		return lat, lon
 		// fmt.Println(string(out))
 		// parseOutput(string(out))
 	}
+
+
 }
 
 func GPStoOpenStreetMapDirectory(cmd *cobra.Command) {
