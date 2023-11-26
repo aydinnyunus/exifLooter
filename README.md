@@ -74,6 +74,8 @@ go install github.com/aydinnyunus/exifLooter@latest
 ExifLooter depends on [exiftool](https://exiftool.org/), so make sure it is on
 your PATH.
 
+---
+
 On [Kali Linux](https://www.kali.org/tools/exiflooter/)
 
 ```bash
