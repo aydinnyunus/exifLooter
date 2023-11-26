@@ -71,8 +71,14 @@ General information about setting up Exif Looter locally
 go install github.com/aydinnyunus/exifLooter@latest
 ```
 
-Exif Looter depends on [exiftool](https://exiftool.org/), so make sure it is on
+ExifLooter depends on [exiftool](https://exiftool.org/), so make sure it is on
 your PATH.
+
+On [Kali Linux](https://www.kali.org/tools/exiflooter/)
+
+```bash
+sudo apt install exiflooter
+```
 
 <!-- USAGE EXAMPLES -->
 
