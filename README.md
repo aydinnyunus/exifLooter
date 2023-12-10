@@ -82,6 +82,9 @@ On [Kali Linux](https://www.kali.org/tools/exiflooter/)
 sudo apt install exiflooter
 ```
 
+<img width="1719" alt="image" src="https://github.com/aydinnyunus/exifLooter/assets/52822869/20cfce7d-13be-40d3-a10b-cd7f49a547e6">
+
+
 <!-- USAGE EXAMPLES -->
 
 ## Usage
