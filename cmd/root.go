@@ -223,6 +223,12 @@ func GPStoOpenStreetMap(cmd *cobra.Command, args string, inDir bool)  (string,st
 				} else if strings.Contains(val,"E"){
 					s = strings.Trim(s, "'")
 					lon = s
+				} else if strings.Contains(val,"S"){
+					s = strings.Trim(s, "'")
+					lat = "-" + s
+				} else if strings.Contains(val,"W"){
+					s = strings.Trim(s, "'")
+					lon = "-" + s
 				}
 			}
 		}
@@ -251,6 +257,12 @@ func GPStoOpenStreetMap(cmd *cobra.Command, args string, inDir bool)  (string,st
 				} else if strings.Contains(val,"E"){
 					s = strings.Trim(s, "'")
 					lon = s
+				} else if strings.Contains(val,"S"){
+					s = strings.Trim(s, "'")
+					lat = "-" + s
+				} else if strings.Contains(val,"W"){
+					s = strings.Trim(s, "'")
+					lon = "-" + s
 				}
 			}
 		}
